@@ -5,6 +5,7 @@ from src.core.exception import handlers as exception_handlers
 from src.api.rest.routes.project_routes import router as project_router
 from src.api.middleware.cors import setup_cors
 from src.api.rest.routes.task_routes import router as task_router
+from src.api.rest.routes.sse_routes import router as sse_router
 import src.data.models 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -17,5 +18,6 @@ def get_app():
     setup_cors(app)
     app.include_router(project_router)
     app.include_router(task_router)
+    app.include_router(sse_router)
     exception_handlers.register_exception_handlers(app)
     return app

@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     DATABASE_URI: str
     SECRET_KEY: str
     ALGORITHM: str
+    SYNC_DATABASE_URL: str
 
     model_config = SettingsConfigDict(
         env_file=BASE_DIR / ".env",

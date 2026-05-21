@@ -12,6 +12,7 @@ from src.core.exception.custom_exception import (
 
 
 )
+from src.api.rest.routes.sse_routes import subscribers
 import logging
 
 logger=logging.getLogger(__name__)
@@ -132,6 +133,19 @@ class TaskService:
             # task.assigned_to=user_id    
             updated_task=await self.task_repository.update_task(task, {"assigned_to": user_id})
             logger.info(f"Task with id {task_id} assigned to user {user_id} successfully")
+            
+            user_queue = subscribers.get(updated_task.assigned_to)
+            if user_queue:
+                await user_queue.put({
+                    "id": str(updated_task.id),
+                    "title": updated_task.title,
+                    "description": updated_task.description,
+                    "status": updated_task.status,
+                    "project_id": str(updated_task.project_id),
+                    "assigned_to": str(updated_task.assigned_to),
+                    "created_by": str(updated_task.created_by)
+                })
+              
             return TaskResponse(
                 id=updated_task.id,
                 title=updated_task.title,
