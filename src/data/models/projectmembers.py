@@ -14,4 +14,4 @@ class ProjectMember(Base):
         default=uuid.uuid4,
         primary_key=True)
     project_id:Mapped[UUID]=mapped_column(UUID(as_uuid=True),ForeignKey("projects.id"),nullable=False)
-    user_id:Mapped[UUID]=mapped_column(UUID(as_uuid=True),ForeignKey("users.id"),nullable=False)
+    user_id:Mapped[UUID]=mapped_column(UUID(as_uuid=True),ForeignKey("users.id",ondelete="CASCADE"),nullable=False)

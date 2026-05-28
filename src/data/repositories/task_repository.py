@@ -20,6 +20,9 @@ class TaskRepository:
         await self.db.flush()
         await self.db.refresh(task)
         return task
+    async def get_project_by_id(self, project_id):
+        result=await self.db.execute(select(Project).where(Project.id == project_id))
+        return result.scalar_one_or_none()
     async def delete_task(self,task:Task):
         await self.db.delete(task)
         await self.db.flush()

@@ -20,5 +20,5 @@ class Task(Base):
     description:Mapped[str]=mapped_column(Text,nullable=True)
     status:Mapped[TaskStatus]=mapped_column(SQLEnum(TaskStatus),nullable=False,default=TaskStatus.TODO)
     project_id:Mapped[UUID]=mapped_column(UUID(as_uuid=True),ForeignKey("projects.id"),nullable=False)
-    assigned_to:Mapped[UUID]=mapped_column(UUID(as_uuid=True),ForeignKey("users.id"),nullable=True)
-    created_by:Mapped[UUID]=mapped_column(UUID(as_uuid=True),ForeignKey("users.id"),nullable=False)
+    assigned_to:Mapped[UUID]=mapped_column(UUID(as_uuid=True),ForeignKey("users.id",ondelete="CASCADE"),nullable=True)
+    created_by:Mapped[UUID]=mapped_column(UUID(as_uuid=True),ForeignKey("users.id",ondelete="CASCADE"),nullable=False)

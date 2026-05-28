@@ -23,7 +23,7 @@ class Project(Base):
     name:Mapped[str]=mapped_column(String(100),nullable=False)
     description:Mapped[str]=mapped_column(Text,nullable=True)
     status:Mapped[ProjectStatus]=mapped_column(SQLEnum(ProjectStatus),nullable=False,default=ProjectStatus.ONGOING)
-    manager_id:Mapped[UUID]=mapped_column(UUID(as_uuid=True),ForeignKey("users.id"),nullable=True)
-    created_by:Mapped[UUID]=mapped_column(UUID(as_uuid=True),ForeignKey("users.id"),nullable=False)
+    manager_id:Mapped[UUID]=mapped_column(UUID(as_uuid=True),ForeignKey("users.id",ondelete="CASCADE"),nullable=True)
+    created_by:Mapped[UUID]=mapped_column(UUID(as_uuid=True),ForeignKey("users.id",ondelete="CASCADE"),nullable=False)
 
     
